@@ -63,10 +63,66 @@
       color: #007bff;
       text-shadow: 0 0 8px #007bff55;
     }
+    @media (max-width: 900px) {
+      main {
+        padding: 1.2rem !important;
+      }
+      .img-interactiva {
+        width: 100% !important;
+        max-width: 320px !important;
+        height: auto !important;
+      }
+    }
+    @media (max-width: 600px) {
+      nav, footer, main {
+        padding-left: 0.2rem !important;
+        padding-right: 0.2rem !important;
+      }
+      main {
+        padding: 0.7rem !important;
+      }
+      .img-interactiva {
+        width: 100% !important;
+        max-width: 220px !important;
+        height: auto !important;
+      }
+      h1 {
+        font-size: 1.5rem !important;
+      }
+    }
+    /* Menú móvil */
+    #mobileMenu {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 8px 32px 0 #007bff22;
+      z-index: 50;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #0b3d91;
+    }
+    #mobileMenu a {
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #e6f2ff;
+      transition: color 0.2s;
+    }
+    #mobileMenu a:hover {
+      color: #007bff;
+      background: #e6f2ff;
+    }
+    @media (min-width: 640px) {
+      #mobileMenu {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body class="bg-[#e6f2ff] min-h-screen flex flex-col items-center p-4 relative">
-  <nav class="w-full max-w-6xl flex items-center justify-between py-4 px-6 bg-white rounded-xl shadow-md mb-8">
+  <nav class="w-full max-w-6xl flex items-center justify-between py-4 px-6 bg-white rounded-xl shadow-md mb-8 relative">
     <div class="flex items-center gap-3">
       <img src="imagenes/LOGO EDITABLE.png" alt="Logo Solcar Autos" class="w-20 h-20"/>
       <span class="text-[#0b3d91] font-extrabold text-2xl sm:text-3xl select-none">SOLCAR AUTOS</span>
@@ -78,11 +134,19 @@
       <li><a class="hover:text-[#007bff] transition-colors font-bold underline" href="quienes.html">Quiénes Somos</a></li>
       <li><a class="hover:text-[#007bff] transition-colors" href="contacto.html">Contacto</a></li>
     </ul>
-    <button aria-label="Abrir menú" class="sm:hidden text-[#0b3d91] focus:outline-none">
+    <button id="mobileMenuBtn" aria-label="Abrir menú" class="sm:hidden text-[#0b3d91] focus:outline-none">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
     </button>
+    <!-- Menú móvil oculto por defecto -->
+    <ul id="mobileMenu" class="hidden">
+      <li><a href="INDEX.HTML">Inicio</a></li>
+      <li><a href="vision.html">Visión</a></li>
+      <li><a href="mision.html">Misión</a></li>
+      <li><a class="font-bold underline" href="quienes.html">Quiénes Somos</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
   </nav>
   <main class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-10 flex flex-col items-center">
     <h1 class="text-[#0b3d91] text-4xl font-extrabold mb-6 select-none text-center animar-titulo">¿Quiénes Somos?</h1>
@@ -90,8 +154,10 @@
       <img src="imagenes/LOGO EDITABLE.png" alt="Logo Solcar Autos" class="w-80 h-65 img-interactiva rounded-2xl"/>
     </div>
     <p class="text-gray-700 text-lg leading-relaxed text-center mb-6 animar-parrafo texto-iluminado">
-Somos SOLCAR AUTOS una empresa intibucana dedicada a la importación compra y venta de vehículos nacida en el año 2017. Siendo a la fecha importadores directos de las subastas más grandes de Estados Unidos Lo que nos diferencia es nuestra pasión por la industria automotriz y el compromiso con nuestros clientes. 
-Nuestro equipo está formado por apasionados en el área y comprometidos con ofrecerte lo mejor    <div class="w-full flex justify-center mt-10">
+      Somos SOLCAR AUTOS una empresa intibucana dedicada a la importación compra y venta de vehículos nacida en el año 2017. Siendo a la fecha importadores directos de las subastas más grandes de Estados Unidos. Lo que nos diferencia es nuestra pasión por la industria automotriz y el compromiso con nuestros clientes.
+      Nuestro equipo está formado por apasionados en el área y comprometidos con ofrecerte lo mejor.
+    </p>
+    <div class="w-full flex justify-center mt-10">
       <a href="pagina.html" class="bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-bold px-8 py-3 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all text-lg flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
@@ -112,5 +178,21 @@ Nuestro equipo está formado por apasionados en el área y comprometidos con ofr
     </span>
     <a class="hover:text-[#007bff] transition-colors" href="condiciones.html">Términos y Condiciones</a>
   </footer>
+  <script>
+    // Menú móvil funcional
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    // Cierra el menú móvil al hacer clic en un enlace
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+    // Cierra el menú móvil al cambiar tamaño de pantalla
+    window.addEventListener('resize', () => {
+      if(window.innerWidth >= 640) mobileMenu.classList.add('hidden');
+    });
+  </script>
 </body>
 </html>
