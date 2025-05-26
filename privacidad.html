@@ -8,9 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet"/>
   <style>
     body { font-family: "Montserrat", sans-serif; }
-    .fade-in {
-      animation: fadeIn 1.2s;
-    }
+    .fade-in { animation: fadeIn 1.2s; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(30px);}
       to { opacity: 1; transform: translateY(0);}
@@ -75,21 +73,48 @@
     .autor-info a:hover {
       color: #0b3d91;
     }
+    /* Overlay para menú móvil */
+    .mobile-menu-bg {
+      background: rgba(0,0,0,0.4);
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: none;
+    }
+    .mobile-menu-bg.active {
+      display: block;
+    }
   </style>
 </head>
 <body class="bg-[#e6f2ff] min-h-screen flex flex-col items-center p-4">
-  <!-- NAV con logo grande sin círculo ni fondo -->
-  <nav class="w-full max-w-3xl flex items-center justify-between py-4 px-6 bg-white rounded-xl shadow-md mb-8">
+  <!-- NAV adaptativo -->
+  <nav class="w-full max-w-3xl flex items-center justify-between py-4 px-6 bg-white rounded-xl shadow-md mb-8 relative z-50">
     <div class="flex items-center gap-3">
       <img src="imagenes/LOGO EDITABLE.png" alt="Logo Solcar Autos" class="w-20 h-20"/>
       <span class="text-[#0b3d91] font-extrabold text-2xl sm:text-3xl select-none">SOLCAR AUTOS</span>
     </div>
-    <div class="flex space-x-8 text-[#0b3d91] font-semibold text-sm select-none">
+    <!-- Menú desktop -->
+    <div class="hidden md:flex space-x-8 text-[#0b3d91] font-semibold text-sm select-none">
       <a class="hover:text-[#007bff] transition-colors" href="INDEX.HTML">Inicio</a>
       <a class="hover:text-[#007bff] transition-colors" href="condiciones.html">Términos y Condiciones</a>
       <a class="hover:text-[#007bff] transition-colors" href="quienes somos.html">Quiénes Somos</a>
       <a class="hover:text-[#007bff] transition-colors" href="contacto.html">Contacto</a>
     </div>
+    <!-- Botón hamburguesa móvil -->
+    <button id="menuBtn" aria-label="Abrir menú" class="md:hidden text-[#0b3d91] focus:outline-none">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </button>
+    <!-- Menú móvil -->
+    <div id="mobileMenu" class="fixed top-0 right-0 w-64 h-full bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col pt-8 px-8 space-y-6 text-[#0b3d91] font-semibold text-lg select-none md:hidden">
+      <button id="closeMenuBtn" aria-label="Cerrar menú" class="absolute top-4 right-4 text-3xl font-bold text-[#0b3d91]">&times;</button>
+      <a class="hover:text-[#007bff] transition-colors" href="INDEX.HTML">Inicio</a>
+      <a class="hover:text-[#007bff] transition-colors" href="condiciones.html">Términos y Condiciones</a>
+      <a class="hover:text-[#007bff] transition-colors" href="quienes somos.html">Quiénes Somos</a>
+      <a class="hover:text-[#007bff] transition-colors" href="contacto.html">Contacto</a>
+    </div>
+    <div id="mobileMenuBg" class="mobile-menu-bg"></div>
   </nav>
   <main class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6 sm:p-10 mt-2 mb-8 fade-in">
     <h1 class="text-[#0b3d91] text-3xl font-extrabold mb-6 text-center">Política de Privacidad</h1>
@@ -161,5 +186,32 @@
     <a class="hover:text-[#007bff] transition-colors" href="condiciones.html">Términos y Condiciones</a>
     <a class="hover:text-[#007bff] transition-colors" href="contacto.html">Contacto</a>
   </footer>
+  <script>
+    // Menú móvil funcional
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const mobileMenuBg = document.getElementById('mobileMenuBg');
+
+    function openMenu() {
+      mobileMenu.classList.remove('translate-x-full');
+      mobileMenu.classList.add('translate-x-0');
+      mobileMenuBg.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      mobileMenu.classList.add('translate-x-full');
+      mobileMenu.classList.remove('translate-x-0');
+      mobileMenuBg.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    menuBtn.addEventListener('click', openMenu);
+    closeMenuBtn.addEventListener('click', closeMenu);
+    mobileMenuBg.addEventListener('click', closeMenu);
+    // Cierra menú con ESC
+    window.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') closeMenu();
+    });
+  </script>
 </body>
 </html>
