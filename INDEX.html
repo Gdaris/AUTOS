@@ -96,11 +96,13 @@
   </style>
 </head>
 <body class="bg-[#e6f2ff] min-h-screen flex flex-col items-center p-4 relative">
-  <nav class="w-full max-w-6xl flex items-center justify-between py-4 px-6 bg-white rounded-xl shadow-md mb-8">
+  <!-- Menú responsive -->
+  <nav class="w-full max-w-6xl flex items-center justify-between py-4 px-6 bg-white rounded-xl shadow-md mb-8 relative">
     <div class="flex items-center gap-3">
       <img src="imagenes/LOGO EDITABLE.png" alt="Logo Solcar Autos" class="w-20 h-20"/>
       <span class="text-[#0b3d91] font-extrabold text-2xl sm:text-3xl select-none">SOLCAR AUTOS</span>
     </div>
+    <!-- Menú escritorio -->
     <ul class="hidden sm:flex space-x-8 text-[#0b3d91] font-semibold text-sm sm:text-base">
       <li><a class="hover:text-[#007bff] transition-colors" href="INDEX.HTML">Inicio</a></li>
       <li><a class="hover:text-[#007bff] transition-colors" href="vision.html">Visión</a></li>
@@ -108,11 +110,20 @@
       <li><a class="hover:text-[#007bff] transition-colors" href="quienes somos.html">Quiénes Somos</a></li>
       <li><a class="hover:text-[#007bff] transition-colors" href="contacto.html">Contacto</a></li>
     </ul>
-    <button aria-label="Abrir menú" class="sm:hidden text-[#0b3d91] focus:outline-none">
+    <!-- Botón menú móvil -->
+    <button id="mobileMenuBtn" aria-label="Abrir menú" class="sm:hidden text-[#0b3d91] focus:outline-none">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
     </button>
+    <!-- Menú móvil oculto por defecto -->
+    <ul id="mobileMenu" class="flex-col absolute top-full left-0 w-full bg-white shadow-lg z-50 text-[#0b3d91] font-semibold text-base sm:hidden hidden">
+      <li><a class="block px-6 py-4 hover:text-[#007bff] transition-colors" href="INDEX.HTML">Inicio</a></li>
+      <li><a class="block px-6 py-4 hover:text-[#007bff] transition-colors" href="vision.html">Visión</a></li>
+      <li><a class="block px-6 py-4 hover:text-[#007bff] transition-colors" href="mision.html">Misión</a></li>
+      <li><a class="block px-6 py-4 hover:text-[#007bff] transition-colors" href="quienes somos.html">Quiénes Somos</a></li>
+      <li><a class="block px-6 py-4 hover:text-[#007bff] transition-colors" href="contacto.html">Contacto</a></li>
+    </ul>
   </nav>
   <h1 class="text-[#0b3d91] text-3xl sm:text-4xl font-extrabold mb-8 select-none">Solcar Autos</h1>
   
@@ -272,6 +283,21 @@
   <!-- Fin modal -->
 
   <script>
+    // Menú móvil funcional
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    // Cierra el menú móvil al hacer clic en un enlace
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+    // Cierra el menú móvil al cambiar tamaño de pantalla
+    window.addEventListener('resize', () => {
+      if(window.innerWidth >= 640) mobileMenu.classList.add('hidden');
+    });
+
     // Imágenes y características de cada auto
     const imagesCar1 = [
       "imagenes/1.1.jpg",
@@ -293,6 +319,7 @@
     ];
 
     const imagesCar2 = [
+      "imagenes/2.jpg", // Imagen principal igual a la del card
       "imagenes/2.2.jpg",
       "imagenes/2.3.jpg",
       "imagenes/2.4.jpg",
