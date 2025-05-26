@@ -63,10 +63,77 @@
       color: #007bff;
       text-shadow: 0 0 8px #007bff55;
     }
+    /* Responsive */
+    @media (max-width: 900px) {
+      main {
+        padding: 1.2rem !important;
+      }
+      .flex-col.sm\:flex-row {
+        flex-direction: column !important;
+      }
+      .card-mision {
+        margin-bottom: 1.5rem;
+      }
+      .img-interactiva {
+        width: 100% !important;
+        max-width: 320px !important;
+        height: auto !important;
+      }
+    }
+    @media (max-width: 600px) {
+      nav, footer, main {
+        padding-left: 0.2rem !important;
+        padding-right: 0.2rem !important;
+      }
+      main {
+        padding: 0.7rem !important;
+      }
+      .img-interactiva {
+        width: 100% !important;
+        max-width: 220px !important;
+        height: auto !important;
+      }
+      h1 {
+        font-size: 1.5rem !important;
+      }
+      .card-mision {
+        padding: 1rem 0.5rem !important;
+        font-size: 0.97rem;
+      }
+    }
+    /* Menú móvil */
+    #mobileMenu {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 8px 32px 0 #007bff22;
+      z-index: 50;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #0b3d91;
+    }
+    #mobileMenu a {
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #e6f2ff;
+      transition: color 0.2s;
+    }
+    #mobileMenu a:hover {
+      color: #007bff;
+      background: #e6f2ff;
+    }
+    @media (min-width: 640px) {
+      #mobileMenu {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body class="bg-[#e6f2ff] min-h-screen flex flex-col items-center p-4 relative">
-  <nav class="w-full max-w-6xl flex items-center justify-between py-4 px-6 bg-white rounded-xl shadow-md mb-8">
+  <nav class="w-full max-w-6xl flex items-center justify-between py-4 px-6 bg-white rounded-xl shadow-md mb-8 relative">
     <div class="flex items-center gap-3">
       <img src="imagenes/LOGO EDITABLE.png" alt="Logo Solcar Autos" class="w-20 h-20"/>
       <span class="text-[#0b3d91] font-extrabold text-2xl sm:text-3xl select-none">SOLCAR AUTOS</span>
@@ -75,25 +142,32 @@
       <li><a class="hover:text-[#007bff] transition-colors" href="INDEX.HTML">Inicio</a></li>
       <li><a class="hover:text-[#007bff] transition-colors" href="vision.html">Visión</a></li>
       <li><a class="hover:text-[#007bff] transition-colors font-bold underline" href="mision.html">Misión</a></li>
-      <li>      <a class="hover:text-[#007bff] transition-colors" href="quienes somos.html">Quiénes Somos</a>
-</li>
+      <li><a class="hover:text-[#007bff] transition-colors" href="quienes somos.html">Quiénes Somos</a></li>
       <li><a class="hover:text-[#007bff] transition-colors" href="contacto.html">Contacto</a></li>
     </ul>
-    <button aria-label="Abrir menú" class="sm:hidden text-[#0b3d91] focus:outline-none">
+    <button id="mobileMenuBtn" aria-label="Abrir menú" class="sm:hidden text-[#0b3d91] focus:outline-none">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
     </button>
+    <!-- Menú móvil oculto por defecto -->
+    <ul id="mobileMenu" class="hidden">
+      <li><a href="INDEX.HTML">Inicio</a></li>
+      <li><a href="vision.html">Visión</a></li>
+      <li><a class="font-bold underline" href="mision.html">Misión</a></li>
+      <li><a href="quienes somos.html">Quiénes Somos</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
   </nav>
   <main class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-10 flex flex-col items-center">
     <h1 class="text-[#0b3d91] text-4xl font-extrabold mb-6 select-none text-center animar-titulo">Nuestra Misión</h1>
     <div class="relative w-full max-w-md mb-8 flex flex-col items-center gap-6">
-  <!-- Logo más ancho que alto, altura igual, bordes redondeados -->
-  <img src="imagenes/LOGO EDITABLE.png" alt="Logo Solcar Autos" class="w-80 h-65 img-interactiva rounded-2xl"/>
-</div>
+      <img src="imagenes/LOGO EDITABLE.png" alt="Logo Solcar Autos" class="w-80 h-65 img-interactiva rounded-2xl"/>
+    </div>
     <p class="text-gray-700 text-lg leading-relaxed text-center mb-6 animar-parrafo texto-iluminado">
-Brindar a nuestros clientes un vehículo eficiente y de calidad que se adapte a sus necesidades 
-Y por medio de ellas formar una red de clientes que recomienden nuestros servicios    </p>
+      Brindar a nuestros clientes un vehículo eficiente y de calidad que se adapte a sus necesidades 
+      Y por medio de ellas formar una red de clientes que recomienden nuestros servicios
+    </p>
     <div class="flex flex-col sm:flex-row gap-6 w-full justify-center mt-8">
       <div class="flex-1 bg-[#e6f2ff] rounded-xl p-6 shadow text-center card-mision group">
         <svg class="icono-mision group-hover:scale-110 transition-transform" fill="none" stroke="#0b3d91" stroke-width="2" viewBox="0 0 48 48">
@@ -104,8 +178,8 @@ Y por medio de ellas formar una red de clientes que recomienden nuestros servic
           <circle cx="30" cy="36" r="3" fill="#0b3d91"/>
         </svg>
         <h2 class="text-[#0b3d91] font-bold text-xl mb-2">Logística</h2>
-<p class="text-gray-600">  Entrega y gestión de vehículos con grúa, barco y trámites aduaneros.
-</p>      </div>
+        <p class="text-gray-600">Entrega y gestión de vehículos con grúa, barco y trámites aduaneros.</p>
+      </div>
       <div class="flex-1 bg-[#e6f2ff] rounded-xl p-6 shadow text-center card-mision group">
         <svg class="icono-mision group-hover:scale-110 transition-transform" fill="none" stroke="#0b3d91" stroke-width="2" viewBox="0 0 48 48">
           <rect x="10" y="14" width="28" height="20" rx="6" fill="#fff" stroke="#007bff" stroke-width="3"/>
@@ -144,5 +218,21 @@ Y por medio de ellas formar una red de clientes que recomienden nuestros servic
     </span>
     <a class="hover:text-[#007bff] transition-colors" href="condiciones.html">Términos y Condiciones</a>
   </footer>
+  <script>
+    // Menú móvil funcional
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    // Cierra el menú móvil al hacer clic en un enlace
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+    // Cierra el menú móvil al cambiar tamaño de pantalla
+    window.addEventListener('resize', () => {
+      if(window.innerWidth >= 640) mobileMenu.classList.add('hidden');
+    });
+  </script>
 </body>
 </html>
