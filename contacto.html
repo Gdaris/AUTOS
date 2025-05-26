@@ -95,43 +95,27 @@
         height: 200px !important;
       }
     }
-    /* Menú móvil */
-    #mobileMenu {
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      background: #fff;
-      box-shadow: 0 8px 32px 0 #007bff22;
-      z-index: 50;
-      font-weight: 600;
-      font-size: 1rem;
-      color: #0b3d91;
+    /* Overlay para menú móvil */
+    .mobile-menu-bg {
+      background: rgba(0,0,0,0.4);
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: none;
     }
-    #mobileMenu a {
-      padding: 1rem 2rem;
-      border-bottom: 1px solid #e6f2ff;
-      transition: color 0.2s;
-    }
-    #mobileMenu a:hover {
-      color: #007bff;
-      background: #e6f2ff;
-    }
-    @media (min-width: 640px) {
-      #mobileMenu {
-        display: none !important;
-      }
+    .mobile-menu-bg.active {
+      display: block;
     }
   </style>
 </head>
 <body class="bg-[#e6f2ff] min-h-screen flex flex-col items-center p-4 relative">
-  <nav class="w-full max-w-6xl flex items-center justify-between py-4 px-6 bg-white rounded-xl shadow-md mb-8 relative">
+  <!-- NAV adaptativo -->
+  <nav class="w-full max-w-6xl flex items-center justify-between py-4 px-6 bg-white rounded-xl shadow-md mb-8 relative z-50">
     <div class="flex items-center gap-3">
       <img src="imagenes/LOGO EDITABLE.png" alt="Logo Solcar Autos" class="w-20 h-20"/>
       <span class="text-[#0b3d91] font-extrabold text-2xl sm:text-3xl select-none">SOLCAR AUTOS</span>
     </div>
+    <!-- Menú desktop -->
     <ul class="hidden sm:flex space-x-8 text-[#0b3d91] font-semibold text-sm sm:text-base">
       <li><a class="hover:text-[#007bff] transition-colors" href="INDEX.HTML">Inicio</a></li>
       <li><a class="hover:text-[#007bff] transition-colors" href="vision.html">Visión</a></li>
@@ -139,19 +123,22 @@
       <li><a class="hover:text-[#007bff] transition-colors" href="quienes somos.html">Quiénes Somos</a></li>
       <li><a class="hover:text-[#007bff] transition-colors font-bold underline" href="contacto.html">Contacto</a></li>
     </ul>
-    <button id="mobileMenuBtn" aria-label="Abrir menú" class="sm:hidden text-[#0b3d91] focus:outline-none">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <!-- Botón hamburguesa móvil -->
+    <button id="menuBtn" aria-label="Abrir menú" class="sm:hidden text-[#0b3d91] focus:outline-none">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
     </button>
-    <!-- Menú móvil oculto por defecto -->
-    <ul id="mobileMenu" class="hidden">
-      <li><a href="INDEX.HTML">Inicio</a></li>
-      <li><a href="vision.html">Visión</a></li>
-      <li><a href="mision.html">Misión</a></li>
-      <li><a href="quienes somos.html">Quiénes Somos</a></li>
-      <li><a class="font-bold underline" href="contacto.html">Contacto</a></li>
-    </ul>
+    <!-- Menú móvil -->
+    <div id="mobileMenu" class="fixed top-0 right-0 w-64 h-full bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col pt-8 px-8 space-y-6 text-[#0b3d91] font-semibold text-lg select-none sm:hidden">
+      <button id="closeMenuBtn" aria-label="Cerrar menú" class="absolute top-4 right-4 text-3xl font-bold text-[#0b3d91]">&times;</button>
+      <a class="hover:text-[#007bff] transition-colors" href="INDEX.HTML">Inicio</a>
+      <a class="hover:text-[#007bff] transition-colors" href="vision.html">Visión</a>
+      <a class="hover:text-[#007bff] transition-colors" href="mision.html">Misión</a>
+      <a class="hover:text-[#007bff] transition-colors" href="quienes somos.html">Quiénes Somos</a>
+      <a class="hover:text-[#007bff] transition-colors font-bold underline" href="contacto.html">Contacto</a>
+    </div>
+    <div id="mobileMenuBg" class="mobile-menu-bg"></div>
   </nav>
   <main class="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-10 flex flex-col items-center">
     <h1 class="text-[#0b3d91] text-4xl font-extrabold mb-6 select-none text-center animar-titulo">Contáctanos</h1>
@@ -206,18 +193,29 @@
   </footer>
   <script>
     // Menú móvil funcional
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
-    // Cierra el menú móvil al hacer clic en un enlace
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-    });
-    // Cierra el menú móvil al cambiar tamaño de pantalla
-    window.addEventListener('resize', () => {
-      if(window.innerWidth >= 640) mobileMenu.classList.add('hidden');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const mobileMenuBg = document.getElementById('mobileMenuBg');
+
+    function openMenu() {
+      mobileMenu.classList.remove('translate-x-full');
+      mobileMenu.classList.add('translate-x-0');
+      mobileMenuBg.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      mobileMenu.classList.add('translate-x-full');
+      mobileMenu.classList.remove('translate-x-0');
+      mobileMenuBg.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    menuBtn.addEventListener('click', openMenu);
+    closeMenuBtn.addEventListener('click', closeMenu);
+    mobileMenuBg.addEventListener('click', closeMenu);
+    // Cierra menú con ESC
+    window.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') closeMenu();
     });
   </script>
 </body>
