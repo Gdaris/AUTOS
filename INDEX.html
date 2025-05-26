@@ -3,165 +3,130 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <title>Solcar Autos</title>
-  <link rel="icon" href="imagenes/LOGO%20EDITABLE.png" type="image/png">
+  <title>Visión | Solcar Autos</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet"/>
   <style>
     body { font-family: "Montserrat", sans-serif; }
-    #modalImagesContainer,
-    #modalFeaturesList {
-      scrollbar-width: none;
-      -ms-overflow-style: none;
+    .card-vision {
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
     }
-    #modalImagesContainer::-webkit-scrollbar,
-    #modalFeaturesList::-webkit-scrollbar {
-      width: 0;
-      height: 0;
-      display: none;
-      background: transparent;
+    .card-vision:hover {
+      transform: translateY(-8px) scale(1.04);
+      box-shadow: 0 8px 32px 0 rgba(11,61,145,0.18), 0 1.5px 8px 0 #007bff33;
+      background: linear-gradient(135deg, #e6f2ff 80%, #b3d1ff 100%);
     }
-    #modalImagesContainer { scroll-behavior: smooth; }
-    #modalMainImageContainer {
-      background: white; border-radius: 1.5rem; padding: 1.5rem;
-      box-shadow: 0 15px 40px rgba(11, 61, 145, 0.3);
-      max-height: 28rem; max-width: 100%; margin: 0 auto 2rem;
-      display: flex; justify-content: center; align-items: center;
-      overflow: hidden; position: relative; transition: box-shadow 0.3s ease;
+    .icono-vision {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 12px auto;
+      display: block;
+      filter: drop-shadow(0 2px 8px #007bff44);
     }
-    #modalMainImageContainer:hover { box-shadow: 0 0 30px 8px rgba(0, 123, 255, 0.7); }
-    #modalMainImage {
-      border-radius: 1.25rem; cursor: grab;
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-      user-select: none; max-height: 24rem; max-width: 100%;
-      object-fit: contain; display: block;
+    .animar-titulo {
+      animation: fadeInDown 1s;
     }
-    #modalMainImage:active { cursor: grabbing; }
-    #modalImagesContainer {
-      display: flex; gap: 1.5rem; overflow-x: auto; padding-bottom: 1rem; justify-content: center;
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px);}
+      to { opacity: 1; transform: translateY(0);}
     }
-    #modalImagesContainer .thumb {
-      flex: 0 0 auto; width: 96px; height: 96px; border-radius: 1rem; cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.2s;
-      object-fit: cover; border: 3px solid transparent; filter: grayscale(20%);
-      opacity: 0.85; background: #fff; z-index: 1;
+    .animar-parrafo {
+      animation: fadeIn 1.2s;
     }
-    #modalImagesContainer .thumb:hover {
-      box-shadow: 0 8px 20px rgba(0, 123, 255, 0.7);
-      transform: scale(1.15); border-color: #3b82f6; opacity: 1; filter: none; z-index: 10;
+    @keyframes fadeIn {
+      from { opacity: 0;}
+      to { opacity: 1;}
     }
-    #modalImagesContainer .thumb.selected {
-      box-shadow: 0 0 20px 4px #3b82f6;
-      transform: scale(1.15); border-color: #2563eb; opacity: 1; filter: none; z-index: 20; background: #fff;
+    .img-interactiva {
+      transition: 
+        transform 0.5s cubic-bezier(.4,2,.3,1), 
+        box-shadow 0.4s, 
+        filter 0.4s;
+      cursor: pointer;
+      box-shadow: 0 4px 24px #0b3d9140;
+      filter: drop-shadow(0 0 0 #007bff);
     }
-    #modalFeaturesList {
-      list-style-type: disc; list-style-position: inside; color: #374151;
-      max-height: 16rem; overflow-y: auto; padding-left: 1.5rem;
-      font-size: 1.125rem; line-height: 1.75rem; margin-top: 0; margin-bottom: 0;
+    .img-interactiva:hover {
+      transform: scale(1.08) rotate(-2deg);
+      box-shadow: 0 8px 40px #007bff55;
+      filter: brightness(1.08) saturate(1.2) drop-shadow(0 0 32px #007bff88);
     }
-    #modalFeaturesList li {
-      margin-bottom: 0.5rem; transition: color 0.3s ease, text-shadow 0.3s ease;
-      cursor: default; user-select: text;
+    .texto-iluminado {
+      color: #0b3d91;
+      font-weight: bold;
+      letter-spacing: 0.01em;
+      transition: color 0.3s, text-shadow 0.3s;
+      cursor: pointer;
     }
-    #modalFeaturesList li:hover {
-      color: #2563eb; font-weight: 700; text-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
+    .texto-iluminado:hover {
+      color: #007bff;
+      text-shadow: 0 0 8px #007bff55;
     }
-    #reserveNowBtn {
-      background: linear-gradient(90deg, #0b3d91 0%, #007bff 100%);
-      color: white; font-weight: 800; font-size: 1.5rem; letter-spacing: 0.1em;
-      padding: 1rem 0; border-radius: 9999px; box-shadow: 0 0 30px #007bff;
-      transition: box-shadow 0.4s ease; width: 100%; max-width: 20rem;
-      margin: 2rem auto 0; display: flex; align-items: center; justify-content: center;
-      gap: 1rem; cursor: pointer; user-select: none;
-    }
-    #reserveNowBtn:hover { box-shadow: 0 0 40px 5px #0056b3; }
-    #carModal { background-color: rgba(0, 0, 0, 0.9); }
-    #carModal > div {
-      border-radius: 2rem; padding: 3rem 3rem 4rem;
-      box-shadow: 0 25px 50px rgba(11, 61, 145, 0.8);
-      max-width: 1100px; min-width: 500px;
-    }
-    #modalMainImageContainer,
-    #modalImagesContainer,
-    #modalFeaturesList {
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    #carModal button[aria-label="Cerrar modal"] {
-      font-size: 3rem; font-weight: 900; color: #4b5563; transition: color 0.3s ease;
-    }
-    #carModal button[aria-label="Cerrar modal"]:hover { color: #111827; }
     @media (max-width: 900px) {
-      #carModal > div {
-        min-width: 0 !important;
-        max-width: 98vw !important;
-        padding: 1.2rem 0.5rem 2rem !important;
+      main {
+        padding: 1.2rem !important;
       }
-      #modalMainImageContainer {
-        padding: 0.5rem !important;
-        max-height: 45vw;
-        min-height: 180px;
+      .img-interactiva {
+        width: 100% !important;
+        max-width: 320px !important;
+        height: auto !important;
       }
-      #modalMainImage {
-        max-height: 35vw;
-        min-height: 120px;
+      .flex-col.sm\:flex-row {
+        flex-direction: column !important;
       }
-      #modalImagesContainer .thumb {
-        width: 60px; height: 60px;
-      }
-      #modalFeaturesList {
-        font-size: 1rem;
-        max-height: 10rem;
-        padding-left: 1rem;
-      }
-      #modalCarName {
-        font-size: 2rem !important;
-      }
-      #modalCarPrice {
-        font-size: 1.3rem !important;
-      }
-      #reserveNowBtn {
-        font-size: 1.1rem !important;
-        padding: 0.7rem 0 !important;
-        max-width: 100%;
+      .card-vision {
+        margin-bottom: 1.5rem;
       }
     }
     @media (max-width: 600px) {
-      #carModal > div {
-        min-width: 0 !important;
-        max-width: 100vw !important;
-        padding: 0.5rem 0.2rem 1.2rem !important;
-        border-radius: 1rem !important;
+      nav, footer, main {
+        padding-left: 0.2rem !important;
+        padding-right: 0.2rem !important;
       }
-      #modalMainImageContainer {
-        padding: 0.2rem !important;
-        max-height: 38vw;
-        min-height: 100px;
+      main {
+        padding: 0.7rem !important;
       }
-      #modalMainImage {
-        max-height: 28vw;
-        min-height: 80px;
+      .img-interactiva {
+        width: 100% !important;
+        max-width: 220px !important;
+        height: auto !important;
       }
-      #modalImagesContainer .thumb {
-        width: 44px; height: 44px;
+      h1 {
+        font-size: 1.5rem !important;
       }
-      #modalFeaturesList {
-        font-size: 0.95rem;
-        max-height: 7rem;
-        padding-left: 0.5rem;
+      .card-vision {
+        padding: 1rem 0.5rem !important;
+        font-size: 0.97rem;
       }
-      #modalCarName {
-        font-size: 1.2rem !important;
-      }
-      #modalCarPrice {
-        font-size: 1rem !important;
-      }
-      #reserveNowBtn {
-        font-size: 0.95rem !important;
-        padding: 0.5rem 0 !important;
-        max-width: 100%;
+    }
+    /* Menú móvil */
+    #mobileMenu {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 8px 32px 0 #007bff22;
+      z-index: 50;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #0b3d91;
+    }
+    #mobileMenu a {
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #e6f2ff;
+      transition: color 0.2s;
+    }
+    #mobileMenu a:hover {
+      color: #007bff;
+      background: #e6f2ff;
+    }
+    @media (min-width: 640px) {
+      #mobileMenu {
+        display: none !important;
       }
     }
   </style>
@@ -174,7 +139,7 @@
     </div>
     <ul class="hidden sm:flex space-x-8 text-[#0b3d91] font-semibold text-sm sm:text-base">
       <li><a class="hover:text-[#007bff] transition-colors" href="INDEX.HTML">Inicio</a></li>
-      <li><a class="hover:text-[#007bff] transition-colors" href="vision.html">Visión</a></li>
+      <li><a class="hover:text-[#007bff] transition-colors font-bold underline" href="vision.html">Visión</a></li>
       <li><a class="hover:text-[#007bff] transition-colors" href="mision.html">Misión</a></li>
       <li><a class="hover:text-[#007bff] transition-colors" href="quienes somos.html">Quiénes Somos</a></li>
       <li><a class="hover:text-[#007bff] transition-colors" href="contacto.html">Contacto</a></li>
@@ -184,142 +149,310 @@
         <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
     </button>
-    <ul id="mobileMenu" class="flex-col absolute top-full left-0 w-full bg-white shadow-lg z-50 text-[#0b3d91] font-semibold text-base sm:hidden hidden">
-      <li><a class="block px-6 py-4 hover:text-[#007bff] transition-colors" href="INDEX.HTML">Inicio</a></li>
-      <li><a class="block px-6 py-4 hover:text-[#007bff] transition-colors" href="vision.html">Visión</a></li>
-      <li><a class="block px-6 py-4 hover:text-[#007bff] transition-colors" href="mision.html">Misión</a></li>
-      <li><a class="block px-6 py-4 hover:text-[#007bff] transition-colors" href="quienes somos.html">Quiénes Somos</a></li>
-      <li><a class="block px-6 py-4 hover:text-[#007bff] transition-colors" href="contacto.html">Contacto</a></li>
+    <!-- Menú móvil oculto por defecto -->
+    <ul id="mobileMenu" class="hidden">
+      <li><a href="INDEX.HTML">Inicio</a></li>
+      <li><a class="font-bold underline" href="vision.html">Visión</a></li>
+      <li><a href="mision.html">Misión</a></li>
+      <li><a href="quienes somos.html">Quiénes Somos</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
     </ul>
   </nav>
-  <h1 class="text-[#0b3d91] text-3xl sm:text-4xl font-extrabold mb-8 select-none">Solcar Autos</h1>
-  <div class="flex flex-wrap gap-6 max-w-6xl w-full justify-center mb-12">
-    <!-- ...tus cards originales aquí... -->
-    <!-- Card 10: Nissan Sentra 2020 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
-      <img alt="Nissan Sentra 2020" class="w-full h-48 object-cover rounded-t-xl" height="200"
-        src="imagenes/11.jpg" width="400"/>
-      <div class="p-6 flex flex-col gap-3">
-        <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Nissan Sentra 2020</h2>
-        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 310,000</p>
-        <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
-          type="button"
-          onclick="event.stopPropagation(); openModal('Nissan Sentra 2020', 'LPS 310,000', imagesCar10[0], imagesCar10, featuresCar10)">
-          VER DETALLES
-        </button>
+  <main class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-10 flex flex-col items-center">
+    <h1 class="text-[#0b3d91] text-4xl font-extrabold mb-6 select-none text-center animar-titulo">Nuestra Visión</h1>
+    <div class="relative w-full max-w-md mb-8 flex flex-col items-center gap-6">
+      <img src="imagenes/LOGO EDITABLE.png" alt="Logo Solcar Autos" class="w-80 h-65 img-interactiva rounded-2xl"/>
+    </div>
+    <p class="text-gray-700 text-lg leading-relaxed text-center mb-6 animar-parrafo texto-iluminado">
+      Convertirnos en una empresa reconocida a nivel nacional por medio de un excepcional servicio y confiabilidad a nuestros clientes 
+    </p>
+    <div class="flex flex-col sm:flex-row gap-6 w-full justify-center mt-8">
+      <div class="flex-1 bg-[#e6f2ff] rounded-xl p-6 shadow text-center card-vision group">
+        <svg class="icono-vision group-hover:scale-110 transition-transform" fill="none" stroke="#0b3d91" stroke-width="2" viewBox="0 0 48 48">
+          <ellipse cx="24" cy="24" rx="20" ry="10" fill="#fff" stroke="#007bff" stroke-width="3"/>
+          <circle cx="24" cy="24" r="6" fill="#007bff"/>
+          <circle cx="24" cy="24" r="3" fill="#fff"/>
+        </svg>
+        <h2 class="text-[#0b3d91] font-bold text-xl mb-2">Innovación</h2>
+        <p class="text-gray-600">A la vanguardia en tecnología y procesos para el sector automotriz.</p>
+      </div>
+      <div class="flex-1 bg-[#e6f2ff] rounded-xl p-6 shadow text-center card-vision group">
+        <svg class="icono-vision group-hover:scale-110 transition-transform" fill="none" stroke="#0b3d91" stroke-width="2" viewBox="0 0 48 48">
+          <rect x="10" y="14" width="28" height="20" rx="6" fill="#fff" stroke="#007bff" stroke-width="3"/>
+          <path d="M24 20v8M20 24h8" stroke="#0b3d91" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <h2 class="text-[#0b3d91] font-bold text-xl mb-2">Excelencia</h2>
+        <p class="text-gray-600">Compromiso con la calidad y la mejora continua en cada servicio.</p>
+      </div>
+      <div class="flex-1 bg-[#e6f2ff] rounded-xl p-6 shadow text-center card-vision group">
+        <svg class="icono-vision group-hover:scale-110 transition-transform" fill="none" stroke="#0b3d91" stroke-width="2" viewBox="0 0 48 48">
+          <rect x="8" y="16" width="32" height="16" rx="8" fill="#fff" stroke="#007bff" stroke-width="3"/>
+          <path d="M16 24l6 6 10-10" stroke="#0b3d91" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h2 class="text-[#0b3d91] font-bold text-xl mb-2">Confianza</h2>
+        <p class="text-gray-600">Relaciones duraderas basadas en la transparencia y el respeto.</p>
       </div>
     </div>
-    <!-- Card 11: Honda Civic 2017 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
-      <img alt="Honda Civic 2017" class="w-full h-48 object-cover rounded-t-xl" height="200"
-        src="imagenes/12.jpg" width="400"/>
-      <div class="p-6 flex flex-col gap-3">
-        <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Honda Civic 2017</h2>
-        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 285,000</p>
-        <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
-          type="button"
-          onclick="event.stopPropagation(); openModal('Honda Civic 2017', 'LPS 285,000', imagesCar11[0], imagesCar11, featuresCar11)">
-          VER DETALLES
-        </button>
+    <div class="w-full flex justify-center mt-10">
+      <a href="pagina.html" class="bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-bold px-8 py-3 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all text-lg flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Volver al inicio
+      </a>
+    </div>
+  </main>
+  <!-- INICIO BLOQUE NUEVOS AUTOS (NO MODIFICA DISEÑO, SOLO AGREGA) -->
+  <section class="w-full max-w-6xl mt-12 mb-8">
+    <h2 class="text-[#0b3d91] text-2xl font-extrabold mb-6 select-none text-center">Nuevos Autos en Inventario</h2>
+    <div class="flex flex-wrap gap-6 justify-center">
+      <!-- Carro 3: Ford Escape 2011 -->
+      <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden card-vision">
+        <img alt="Ford Escape 2011" class="w-full h-48 object-cover rounded-t-xl" src="imagenes/4.jpg"/>
+        <div class="p-6 flex flex-col gap-3">
+          <h3 class="text-[#0b3d91] font-extrabold text-lg">Ford Escape 2011</h3>
+          <p class="text-green-600 font-extrabold">LPS 175,000</p>
+          <ul class="text-gray-700 text-sm mt-2 mb-2">
+            <li>Marca: Ford</li>
+            <li>Modelo: Escape</li>
+            <li>Año: 2011</li>
+            <li>Versión: LIMITADA</li>
+            <li>Motor: 3.0L V6</li>
+            <li>Transmisión: Automática 4x4</li>
+            <li>Enciende: sí</li>
+            <li>Camina: sí</li>
+            <li>Ubicación: Honduras</li>
+          </ul>
+          <div class="flex gap-2 flex-wrap justify-center">
+            <img src="imagenes/4.1.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 1">
+            <img src="imagenes/4.2.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 2">
+            <img src="imagenes/4.3.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 3">
+            <img src="imagenes/4.4.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 4">
+            <img src="imagenes/4.5.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 5">
+            <img src="imagenes/4.6.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 6">
+            <img src="imagenes/4.7.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 7">
+            <img src="imagenes/4.8.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 8">
+            <img src="imagenes/4.9.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 9">
+            <img src="imagenes/4.10.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 10">
+          </div>
+        </div>
+      </div>
+      <!-- Carro 5: BMW X3 2012 -->
+      <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden card-vision">
+        <img alt="BMW X3 2012" class="w-full h-48 object-cover rounded-t-xl" src="imagenes/5.jpg"/>
+        <div class="p-6 flex flex-col gap-3">
+          <h3 class="text-[#0b3d91] font-extrabold text-lg">BMW X3 2012</h3>
+          <p class="text-green-600 font-extrabold">LPS 245,000</p>
+          <ul class="text-gray-700 text-sm mt-2 mb-2">
+            <li>Marca: BMW</li>
+            <li>Modelo: X3</li>
+            <li>Año: 2012</li>
+            <li>Versión: XDRIVE</li>
+            <li>Motor: 3.0L V6</li>
+            <li>Transmisión: Automática 4x4</li>
+            <li>Enciende: sí</li>
+            <li>Camina: sí</li>
+            <li>Ubicación: Honduras</li>
+          </ul>
+          <div class="flex gap-2 flex-wrap justify-center">
+            <img src="imagenes/5.1.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 1">
+            <img src="imagenes/5.2.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 2">
+            <img src="imagenes/5.3.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 3">
+            <img src="imagenes/5.4.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 4">
+            <img src="imagenes/5.5.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 5">
+            <img src="imagenes/5.6.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 6">
+            <img src="imagenes/5.7.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 7">
+            <img src="imagenes/5.8.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 8">
+            <img src="imagenes/5.9.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 9">
+            <img src="imagenes/5.10.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 10">
+          </div>
+        </div>
+      </div>
+      <!-- Carro extra 1 -->
+      <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden card-vision">
+        <img alt="Toyota Yaris 2018" class="w-full h-48 object-cover rounded-t-xl" src="imagenes/6.jpg"/>
+        <div class="p-6 flex flex-col gap-3">
+          <h3 class="text-[#0b3d91] font-extrabold text-lg">Toyota Yaris 2018</h3>
+          <p class="text-green-600 font-extrabold">LPS 210,000</p>
+          <ul class="text-gray-700 text-sm mt-2 mb-2">
+            <li>Marca: Toyota</li>
+            <li>Modelo: Yaris</li>
+            <li>Año: 2018</li>
+            <li>Versión: GLi</li>
+            <li>Motor: 1.5L</li>
+            <li>Transmisión: Automática</li>
+            <li>Enciende: sí</li>
+            <li>Camina: sí</li>
+            <li>Ubicación: Honduras</li>
+          </ul>
+          <div class="flex gap-2 flex-wrap justify-center">
+            <img src="imagenes/6.1.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 1">
+            <img src="imagenes/6.2.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 2">
+            <img src="imagenes/6.3.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 3">
+            <img src="imagenes/6.4.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 4">
+            <img src="imagenes/6.5.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 5">
+            <img src="imagenes/6.6.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 6">
+            <img src="imagenes/6.7.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 7">
+            <img src="imagenes/6.8.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 8">
+            <img src="imagenes/6.9.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 9">
+            <img src="imagenes/6.10.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 10">
+          </div>
+        </div>
+      </div>
+      <!-- Carro extra 2 -->
+      <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden card-vision">
+        <img alt="Mazda CX-5 2019" class="w-full h-48 object-cover rounded-t-xl" src="imagenes/7.jpg"/>
+        <div class="p-6 flex flex-col gap-3">
+          <h3 class="text-[#0b3d91] font-extrabold text-lg">Mazda CX-5 2019</h3>
+          <p class="text-green-600 font-extrabold">LPS 350,000</p>
+          <ul class="text-gray-700 text-sm mt-2 mb-2">
+            <li>Marca: Mazda</li>
+            <li>Modelo: CX-5</li>
+            <li>Año: 2019</li>
+            <li>Versión: Touring</li>
+            <li>Motor: 2.5L</li>
+            <li>Transmisión: Automática</li>
+            <li>Enciende: sí</li>
+            <li>Camina: sí</li>
+            <li>Ubicación: Honduras</li>
+          </ul>
+          <div class="flex gap-2 flex-wrap justify-center">
+            <img src="imagenes/7.1.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 1">
+            <img src="imagenes/7.2.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 2">
+            <img src="imagenes/7.3.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 3">
+            <img src="imagenes/7.4.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 4">
+            <img src="imagenes/7.5.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 5">
+            <img src="imagenes/7.6.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 6">
+            <img src="imagenes/7.7.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 7">
+            <img src="imagenes/7.8.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 8">
+            <img src="imagenes/7.9.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 9">
+            <img src="imagenes/7.10.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 10">
+          </div>
+        </div>
+      </div>
+      <!-- Carro extra 3 -->
+      <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden card-vision">
+        <img alt="Hyundai Tucson 2017" class="w-full h-48 object-cover rounded-t-xl" src="imagenes/8.jpg"/>
+        <div class="p-6 flex flex-col gap-3">
+          <h3 class="text-[#0b3d91] font-extrabold text-lg">Hyundai Tucson 2017</h3>
+          <p class="text-green-600 font-extrabold">LPS 295,000</p>
+          <ul class="text-gray-700 text-sm mt-2 mb-2">
+            <li>Marca: Hyundai</li>
+            <li>Modelo: Tucson</li>
+            <li>Año: 2017</li>
+            <li>Versión: GLS</li>
+            <li>Motor: 2.0L</li>
+            <li>Transmisión: Automática</li>
+            <li>Enciende: sí</li>
+            <li>Camina: sí</li>
+            <li>Ubicación: Honduras</li>
+          </ul>
+          <div class="flex gap-2 flex-wrap justify-center">
+            <img src="imagenes/8.1.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 1">
+            <img src="imagenes/8.2.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 2">
+            <img src="imagenes/8.3.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 3">
+            <img src="imagenes/8.4.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 4">
+            <img src="imagenes/8.5.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 5">
+            <img src="imagenes/8.6.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 6">
+            <img src="imagenes/8.7.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 7">
+            <img src="imagenes/8.8.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 8">
+            <img src="imagenes/8.9.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 9">
+            <img src="imagenes/8.10.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 10">
+          </div>
+        </div>
+      </div>
+      <!-- Carro extra 4 -->
+      <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden card-vision">
+        <img alt="Kia Sportage 2016" class="w-full h-48 object-cover rounded-t-xl" src="imagenes/9.jpg"/>
+        <div class="p-6 flex flex-col gap-3">
+          <h3 class="text-[#0b3d91] font-extrabold text-lg">Kia Sportage 2016</h3>
+          <p class="text-green-600 font-extrabold">LPS 270,000</p>
+          <ul class="text-gray-700 text-sm mt-2 mb-2">
+            <li>Marca: Kia</li>
+            <li>Modelo: Sportage</li>
+            <li>Año: 2016</li>
+            <li>Versión: EX</li>
+            <li>Motor: 2.0L</li>
+            <li>Transmisión: Automática</li>
+            <li>Enciende: sí</li>
+            <li>Camina: sí</li>
+            <li>Ubicación: Honduras</li>
+          </ul>
+          <div class="flex gap-2 flex-wrap justify-center">
+            <img src="imagenes/9.1.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 1">
+            <img src="imagenes/9.2.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 2">
+            <img src="imagenes/9.3.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 3">
+            <img src="imagenes/9.4.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 4">
+            <img src="imagenes/9.5.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 5">
+            <img src="imagenes/9.6.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 6">
+            <img src="imagenes/9.7.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 7">
+            <img src="imagenes/9.8.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 8">
+            <img src="imagenes/9.9.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 9">
+            <img src="imagenes/9.10.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 10">
+          </div>
+        </div>
+      </div>
+      <!-- Carro extra 5 -->
+      <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden card-vision">
+        <img alt="Chevrolet Tracker 2020" class="w-full h-48 object-cover rounded-t-xl" src="imagenes/10.jpg"/>
+        <div class="p-6 flex flex-col gap-3">
+          <h3 class="text-[#0b3d91] font-extrabold text-lg">Chevrolet Tracker 2020</h3>
+          <p class="text-green-600 font-extrabold">LPS 265,000</p>
+          <ul class="text-gray-700 text-sm mt-2 mb-2">
+            <li>Marca: Chevrolet</li>
+            <li>Modelo: Tracker</li>
+            <li>Año: 2020</li>
+            <li>Versión: Premier</li>
+            <li>Motor: 1.2L Turbo</li>
+            <li>Transmisión: Automática</li>
+            <li>Enciende: sí</li>
+            <li>Camina: sí</li>
+            <li>Ubicación: Honduras</li>
+          </ul>
+          <div class="flex gap-2 flex-wrap justify-center">
+            <img src="imagenes/10.1.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 1">
+            <img src="imagenes/10.2.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 2">
+            <img src="imagenes/10.3.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 3">
+            <img src="imagenes/10.4.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 4">
+            <img src="imagenes/10.5.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 5">
+            <img src="imagenes/10.6.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 6">
+            <img src="imagenes/10.7.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 7">
+            <img src="imagenes/10.8.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 8">
+            <img src="imagenes/10.9.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 9">
+            <img src="imagenes/10.10.jpg" class="w-16 h-16 rounded shadow" alt="Miniatura 10">
+          </div>
+        </div>
       </div>
     </div>
-    <!-- Card 12: Suzuki Swift 2019 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
-      <img alt="Suzuki Swift 2019" class="w-full h-48 object-cover rounded-t-xl" height="200"
-        src="imagenes/13.jpg" width="400"/>
-      <div class="p-6 flex flex-col gap-3">
-        <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Suzuki Swift 2019</h2>
-        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 210,000</p>
-        <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
-          type="button"
-          onclick="event.stopPropagation(); openModal('Suzuki Swift 2019', 'LPS 210,000', imagesCar12[0], imagesCar12, featuresCar12)">
-          VER DETALLES
-        </button>
-      </div>
-    </div>
-    <!-- Card 13: Jeep Compass 2018 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
-      <img alt="Jeep Compass 2018" class="w-full h-48 object-cover rounded-t-xl" height="200"
-        src="imagenes/14.jpg" width="400"/>
-      <div class="p-6 flex flex-col gap-3">
-        <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Jeep Compass 2018</h2>
-        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 330,000</p>
-        <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
-          type="button"
-          onclick="event.stopPropagation(); openModal('Jeep Compass 2018', 'LPS 330,000', imagesCar13[0], imagesCar13, featuresCar13)">
-          VER DETALLES
-        </button>
-      </div>
-    </div>
-    <!-- Card 14: Chevrolet Tracker 2020 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
-      <img alt="Chevrolet Tracker 2020" class="w-full h-48 object-cover rounded-t-xl" height="200"
-        src="imagenes/15.jpg" width="400"/>
-      <div class="p-6 flex flex-col gap-3">
-        <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Chevrolet Tracker 2020</h2>
-        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 265,000</p>
-        <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
-          type="button"
-          onclick="event.stopPropagation(); openModal('Chevrolet Tracker 2020', 'LPS 265,000', imagesCar14[0], imagesCar14, featuresCar14)">
-          VER DETALLES
-        </button>
-      </div>
-    </div>
-  </div>
-  <!-- ...resto de tu página (formulario, footer, modal, etc.)... -->
+  </section>
+  <!-- FIN BLOQUE NUEVOS AUTOS -->
+  <footer class="w-full max-w-6xl bg-white rounded-xl shadow-md py-4 px-6 flex justify-center items-center space-x-8 text-[#0b3d91] font-semibold text-sm sm:text-base select-none mt-10">
+    <a class="hover:text-[#007bff] transition-colors" href="privacidad.html">Política de Privacidad</a>
+    <span class="flex items-center space-x-3 mx-4">
+      <a href="https://www.facebook.com/carrosimportadoslaesperanza" target="_blank" title="Facebook" class="flex items-center">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" style="width:28px;height:28px;filter:invert(22%) sepia(99%) saturate(749%) hue-rotate(186deg) brightness(95%) contrast(92%);" />
+      </a>
+      <a href="https://wa.me/50432354306" target="_blank" title="WhatsApp" class="flex items-center">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp" style="width:28px;height:28px;filter:invert(38%) sepia(99%) saturate(749%) hue-rotate(86deg) brightness(95%) contrast(92%);" />
+      </a>
+    </span>
+    <a class="hover:text-[#007bff] transition-colors" href="condiciones.html">Términos y Condiciones</a>
+  </footer>
   <script>
-    // ...tus arrays originales...
-    // Agrega estos arrays al final de tus arrays de autos:
-    const imagesCar10 = [
-      "imagenes/11.jpg","imagenes/11.1.jpg","imagenes/11.2.jpg","imagenes/11.3.jpg","imagenes/11.4.jpg",
-      "imagenes/11.5.jpg","imagenes/11.6.jpg","imagenes/11.7.jpg","imagenes/11.8.jpg","imagenes/11.9.jpg","imagenes/11.10.jpg"
-    ];
-    const featuresCar10 = [
-      "Marca: Nissan","Modelo: Sentra","Año: 2020","Versión: Advance","Motor: 1.8L","Transmisión: Automática",
-      "Enciende: sí","Camina: sí","Ubicación: Honduras"
-    ];
-
-    const imagesCar11 = [
-      "imagenes/12.jpg","imagenes/12.1.jpg","imagenes/12.2.jpg","imagenes/12.3.jpg","imagenes/12.4.jpg",
-      "imagenes/12.5.jpg","imagenes/12.6.jpg","imagenes/12.7.jpg","imagenes/12.8.jpg","imagenes/12.9.jpg","imagenes/12.10.jpg"
-    ];
-    const featuresCar11 = [
-      "Marca: Honda","Modelo: Civic","Año: 2017","Versión: EX","Motor: 2.0L","Transmisión: Automática",
-      "Enciende: sí","Camina: sí","Ubicación: Honduras"
-    ];
-
-    const imagesCar12 = [
-      "imagenes/13.jpg","imagenes/13.1.jpg","imagenes/13.2.jpg","imagenes/13.3.jpg","imagenes/13.4.jpg",
-      "imagenes/13.5.jpg","imagenes/13.6.jpg","imagenes/13.7.jpg","imagenes/13.8.jpg","imagenes/13.9.jpg","imagenes/13.10.jpg"
-    ];
-    const featuresCar12 = [
-      "Marca: Suzuki","Modelo: Swift","Año: 2019","Versión: GL","Motor: 1.2L","Transmisión: Automática",
-      "Enciende: sí","Camina: sí","Ubicación: Honduras"
-    ];
-
-    const imagesCar13 = [
-      "imagenes/14.jpg","imagenes/14.1.jpg","imagenes/14.2.jpg","imagenes/14.3.jpg","imagenes/14.4.jpg",
-      "imagenes/14.5.jpg","imagenes/14.6.jpg","imagenes/14.7.jpg","imagenes/14.8.jpg","imagenes/14.9.jpg","imagenes/14.10.jpg"
-    ];
-    const featuresCar13 = [
-      "Marca: Jeep","Modelo: Compass","Año: 2018","Versión: Limited","Motor: 2.4L","Transmisión: Automática",
-      "Enciende: sí","Camina: sí","Ubicación: Honduras"
-    ];
-
-    const imagesCar14 = [
-      "imagenes/15.jpg","imagenes/15.1.jpg","imagenes/15.2.jpg","imagenes/15.3.jpg","imagenes/15.4.jpg",
-      "imagenes/15.5.jpg","imagenes/15.6.jpg","imagenes/15.7.jpg","imagenes/15.8.jpg","imagenes/15.9.jpg","imagenes/15.10.jpg"
-    ];
-    const featuresCar14 = [
-      "Marca: Chevrolet","Modelo: Tracker","Año: 2020","Versión: Premier","Motor: 1.2L Turbo","Transmisión: Automática",
-      "Enciende: sí","Camina: sí","Ubicación: Honduras"
-    ];
-    // ...resto de tu JS...
+    // Menú móvil funcional
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    // Cierra el menú móvil al hacer clic en un enlace
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+    // Cierra el menú móvil al cambiar tamaño de pantalla
+    window.addEventListener('resize', () => {
+      if(window.innerWidth >= 640) mobileMenu.classList.add('hidden');
+    });
   </script>
 </body>
 </html>
