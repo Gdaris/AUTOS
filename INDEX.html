@@ -27,14 +27,11 @@
       box-shadow: 0 15px 40px rgba(11, 61, 145, 0.3);
       max-height: 28rem; max-width: 100%; margin: 0 auto 2rem;
       display: flex; justify-content: center; align-items: center;
-      overflow: hidden; position: relative;
-      /* Se eliminó el transition para dejarlo estático */
+      overflow: hidden; position: relative; transition: box-shadow 0.3s ease;
     }
-    /* Eliminar hover de modal */
-    #modalMainImageContainer:hover { box-shadow: 0 15px 40px rgba(11, 61, 145, 0.3); }
     #modalMainImage {
       border-radius: 1.25rem; cursor: grab;
-      /* Se eliminó transition */
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
       user-select: none; max-height: 24rem; max-width: 100%;
       object-fit: contain; display: block;
     }
@@ -45,16 +42,17 @@
     #modalImagesContainer .thumb {
       flex: 0 0 auto; width: 96px; height: 96px; border-radius: 1rem; cursor: pointer;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-      /* Se eliminó transition, transform, border-color y opacidad hover */
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.2s;
       object-fit: cover; border: 3px solid transparent; filter: grayscale(20%);
       opacity: 0.85; background: #fff; z-index: 1;
     }
-    /* Quitar hover y selected efectos */
     #modalImagesContainer .thumb:hover {
-      /* Nada, se elimina efecto */
+      box-shadow: 0 8px 20px rgba(0, 123, 255, 0.7);
+      transform: scale(1.15); border-color: #3b82f6; opacity: 1; filter: none; z-index: 10;
     }
     #modalImagesContainer .thumb.selected {
-      /* Nada, se elimina efecto */
+      box-shadow: 0 0 20px 4px #3b82f6;
+      transform: scale(1.15); border-color: #2563eb; opacity: 1; filter: none; z-index: 20; background: #fff;
     }
     #modalFeaturesList {
       list-style-type: disc; list-style-position: inside; color: #374151;
@@ -62,23 +60,21 @@
       font-size: 1.125rem; line-height: 1.75rem; margin-top: 0; margin-bottom: 0;
     }
     #modalFeaturesList li {
-      margin-bottom: 0.5rem;
-      /* Se eliminó transition, color y text-shadow hover */
+      margin-bottom: 0.5rem; transition: color 0.3s ease, text-shadow 0.3s ease;
       cursor: default; user-select: text;
     }
     #modalFeaturesList li:hover {
-      /* Nada, se elimina efecto */
+      color: #2563eb; font-weight: 700; text-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
     }
     #reserveNowBtn {
       background: linear-gradient(90deg, #0b3d91 0%, #007bff 100%);
       color: white; font-weight: 800; font-size: 1.5rem; letter-spacing: 0.1em;
       padding: 1rem 0; border-radius: 9999px; box-shadow: 0 0 30px #007bff;
-      /* Se eliminó transition y hover */
-      width: 100%; max-width: 20rem;
+      transition: box-shadow 0.4s ease; width: 100%; max-width: 20rem;
       margin: 2rem auto 0; display: flex; align-items: center; justify-content: center;
       gap: 1rem; cursor: pointer; user-select: none;
     }
-    #reserveNowBtn:hover { /* Nada, se elimina efecto */ }
+    #reserveNowBtn:hover { box-shadow: 0 0 40px 5px #0056b3; }
     #carModal { background-color: rgba(0, 0, 0, 0.9); }
     #carModal > div {
       border-radius: 2rem; padding: 3rem 3rem 4rem;
@@ -93,98 +89,54 @@
       margin-right: auto;
     }
     #carModal button[aria-label="Cerrar modal"] {
-      font-size: 3rem; font-weight: 900; color: #4b5563;
+      font-size: 3rem; font-weight: 900; color: #4b5563; transition: color 0.3s ease;
     }
-    #carModal button[aria-label="Cerrar modal"]:hover { color: #4b5563; }
-    .mobile-menu-bg {
-      background: rgba(0,0,0,0.4);
-      position: fixed;
-      inset: 0;
-      z-index: 40;
-      display: none;
-    }
-    .mobile-menu-bg.active {
-      display: block;
-    }
-    /* Cards estáticos sin hover ni sombra adicional */
-    .no-hover-effect {
+    #carModal button[aria-label="Cerrar modal"]:hover { color: #111827; }
+
+    /* --- Cambios para dejar las cards estáticas --- */
+    .bg-white.rounded-xl.shadow-lg.max-w-xs.w-full.flex.flex-col.overflow-hidden.transform.transition-transform.duration-300 {
       transition: none !important;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10) !important;
+      transform: none !important;
+    }
+    .bg-white.rounded-xl.shadow-lg.max-w-xs.w-full.flex.flex-col.overflow-hidden.transform.transition-transform.duration-300:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10) !important;
+      transform: none !important;
     }
   </style>
 </head>
 <body class="bg-[#e6f2ff] min-h-screen flex flex-col items-center p-4 relative">
-  <!-- NAV adaptativo -->
-  <nav class="w-full max-w-6xl flex items-center justify-between py-4 px-6 bg-white rounded-xl shadow-md mb-8 relative z-50">
+  <nav class="w-full max-w-6xl flex items-center justify-between py-4 px-6 bg-white rounded-xl shadow-md mb-8">
     <div class="flex items-center gap-3">
       <img src="imagenes/LOGO EDITABLE.png" alt="Logo Solcar Autos" class="w-20 h-20"/>
       <span class="text-[#0b3d91] font-extrabold text-2xl sm:text-3xl select-none">SOLCAR AUTOS</span>
     </div>
-    <!-- Menú desktop -->
-    <div class="hidden md:flex space-x-8 text-[#0b3d91] font-semibold text-sm sm:text-base select-none">
-      <a class="hover:text-[#007bff] transition-colors" href="INDEX.HTML">Inicio</a>
-      <a class="hover:text-[#007bff] transition-colors" href="vision.html">Visión</a>
-      <a class="hover:text-[#007bff] transition-colors" href="mision.html">Misión</a>
-      <a class="hover:text-[#007bff] transition-colors" href="quienes somos.html">Quiénes Somos</a>
-      <a class="hover:text-[#007bff] transition-colors" href="contacto.html">Contacto</a>
-    </div>
-    <!-- Botón hamburguesa móvil -->
-    <button id="menuBtn" aria-label="Abrir menú" class="md:hidden text-[#0b3d91] focus:outline-none">
-      <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <ul class="hidden sm:flex space-x-8 text-[#0b3d91] font-semibold text-sm sm:text-base">
+      <li><a class="hover:text-[#007bff] transition-colors" href="INDEX.HTML">Inicio</a></li>
+      <li><a class="hover:text-[#007bff] transition-colors" href="vision.html">Visión</a></li>
+      <li><a class="hover:text-[#007bff] transition-colors" href="mision.html">Misión</a></li>
+      <li><a class="hover:text-[#007bff] transition-colors" href="quienes somos.html">Quiénes Somos</a></li>
+      <li><a class="hover:text-[#007bff] transition-colors" href="contacto.html">Contacto</a></li>
+    </ul>
+    <button aria-label="Abrir menú" class="sm:hidden text-[#0b3d91] focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
     </button>
-    <!-- Menú móvil -->
-    <div id="mobileMenu" class="fixed top-0 right-0 w-64 h-full bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col pt-8 px-8 space-y-6 text-[#0b3d91] font-semibold text-lg select-none md:hidden">
-      <button id="closeMenuBtn" aria-label="Cerrar menú" class="absolute top-4 right-4 text-3xl font-bold text-[#0b3d91]">&times;</button>
-      <a class="hover:text-[#007bff] transition-colors" href="INDEX.HTML">Inicio</a>
-      <a class="hover:text-[#007bff] transition-colors" href="vision.html">Visión</a>
-      <a class="hover:text-[#007bff] transition-colors" href="mision.html">Misión</a>
-      <a class="hover:text-[#007bff] transition-colors" href="quienes somos.html">Quiénes Somos</a>
-      <a class="hover:text-[#007bff] transition-colors" href="contacto.html">Contacto</a>
-    </div>
-    <div id="mobileMenuBg" class="mobile-menu-bg"></div>
   </nav>
-  <script>
-    // Menú móvil funcional
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const closeMenuBtn = document.getElementById('closeMenuBtn');
-    const mobileMenuBg = document.getElementById('mobileMenuBg');
-
-    function openMenu() {
-      mobileMenu.classList.remove('translate-x-full');
-      mobileMenu.classList.add('translate-x-0');
-      mobileMenuBg.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeMenu() {
-      mobileMenu.classList.add('translate-x-full');
-      mobileMenu.classList.remove('translate-x-0');
-      mobileMenuBg.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-    menuBtn.addEventListener('click', openMenu);
-    closeMenuBtn.addEventListener('click', closeMenu);
-    mobileMenuBg.addEventListener('click', closeMenu);
-    // Cierra menú con ESC
-    window.addEventListener('keydown', function(e){
-      if(e.key === 'Escape') closeMenu();
-    });
-  </script>
   <h1 class="text-[#0b3d91] text-3xl sm:text-4xl font-extrabold mb-8 select-none">Solcar Autos</h1>
   
   <!-- Cards de autos -->
   <div class="flex flex-wrap gap-6 max-w-6xl w-full justify-center mb-12">
     <!-- Card 1: Honda CRV 2015 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden no-hover-effect cursor-pointer">
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 cursor-pointer">
       <img alt="Honda CRV 2015" class="w-full h-48 object-cover rounded-t-xl" height="200"
         src="imagenes/1.jpg" width="400"/>
       <div class="p-6 flex flex-col gap-3">
         <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Honda CRV 2015</h2>
-        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 365,000</p>
+        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 310,000</p>
         <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md transition-shadow"
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
           type="button"
           onclick="event.stopPropagation(); openModal('Honda CRV 2015', 'LPS 310,000', imagesCar1[0], imagesCar1, featuresCar1)">
           VER DETALLES
@@ -192,14 +144,14 @@
       </div>
     </div>
     <!-- Card 2: Ford Escape 2010 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden no-hover-effect cursor-pointer">
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 cursor-pointer">
       <img alt="Ford Escape 2010" class="w-full h-48 object-cover rounded-t-xl" height="200"
         src="imagenes/2.jpg" width="400"/>
       <div class="p-6 flex flex-col gap-3">
         <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Ford Escape 2010</h2>
-        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 170,000</p>
+        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 165,000</p>
         <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md transition-shadow"
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
           type="button"
           onclick="event.stopPropagation(); openModal('Ford Escape 2010', 'LPS 165,000', imagesCar2[0], imagesCar2, featuresCar2)">
           VER DETALLES
@@ -207,14 +159,14 @@
       </div>
     </div>
     <!-- Card 3: Ford Escape 2011 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden no-hover-effect cursor-pointer">
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 cursor-pointer">
       <img alt="Ford Escape 2011" class="w-full h-48 object-cover rounded-t-xl" height="200"
         src="imagenes/3.jpg" width="400"/>
       <div class="p-6 flex flex-col gap-3">
         <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Ford Escape 2011</h2>
-        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 170,000</p>
+        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 175,000</p>
         <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md transition-shadow"
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
           type="button"
           onclick="event.stopPropagation(); openModal('Ford Escape 2011', 'LPS 175,000', imagesCar3[0], imagesCar3, featuresCar3)">
           VER DETALLES
@@ -222,14 +174,14 @@
       </div>
     </div>
     <!-- Card 4: BMW X3 2012 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden no-hover-effect cursor-pointer">
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 cursor-pointer">
       <img alt="BMW X3 2012" class="w-full h-48 object-cover rounded-t-xl" height="200"
         src="imagenes/4.jpg" width="400"/>
       <div class="p-6 flex flex-col gap-3">
         <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">BMW X3 2012</h2>
         <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 245,000</p>
         <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md transition-shadow"
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
           type="button"
           onclick="event.stopPropagation(); openModal('BMW X3 2012', 'LPS 245,000', imagesCar4[0], imagesCar4, featuresCar4)">
           VER DETALLES
@@ -237,14 +189,14 @@
       </div>
     </div>
     <!-- Card 5: Toyota Corolla 2018 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden no-hover-effect cursor-pointer">
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 cursor-pointer">
       <img alt="Toyota Corolla 2018" class="w-full h-48 object-cover rounded-t-xl" height="200"
         src="imagenes/5.jpg" width="400"/>
       <div class="p-6 flex flex-col gap-3">
         <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Toyota Corolla 2018</h2>
         <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 320,000</p>
         <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md transition-shadow"
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
           type="button"
           onclick="event.stopPropagation(); openModal('Toyota Corolla 2018', 'LPS 320,000', imagesCar5[0], imagesCar5, featuresCar5)">
           VER DETALLES
@@ -252,14 +204,14 @@
       </div>
     </div>
     <!-- Card 6: Toyota XRunner 2003 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden no-hover-effect cursor-pointer">
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 cursor-pointer">
       <img alt="Toyota XRunner 2003" class="w-full h-48 object-cover rounded-t-xl" height="200"
         src="imagenes/6.jpg" width="400"/>
       <div class="p-6 flex flex-col gap-3">
         <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Toyota XRunner 2003</h2>
         <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 180,000</p>
         <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md transition-shadow"
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
           type="button"
           onclick="event.stopPropagation(); openModal('Toyota XRunner 2003', 'LPS 180,000', imagesCar6[0], imagesCar6, featuresCar6)">
           VER DETALLES
@@ -267,14 +219,14 @@
       </div>
     </div>
     <!-- Card 7: Ford Escape 2016 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden no-hover-effect cursor-pointer">
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 cursor-pointer">
       <img alt="Ford Escape 2016" class="w-full h-48 object-cover rounded-t-xl" height="200"
         src="imagenes/7.jpg" width="400"/>
       <div class="p-6 flex flex-col gap-3">
         <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Ford Escape 2016</h2>
         <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 225,000</p>
         <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md transition-shadow"
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
           type="button"
           onclick="event.stopPropagation(); openModal('Ford Escape 2016', 'LPS 225,000', imagesCar7[0], imagesCar7, featuresCar7)">
           VER DETALLES
@@ -282,14 +234,14 @@
       </div>
     </div>
     <!-- Card 8: Ford Escape 2004 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden no-hover-effect cursor-pointer">
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 cursor-pointer">
       <img alt="Ford Escape 2004" class="w-full h-48 object-cover rounded-t-xl" height="200"
         src="imagenes/8.jpg" width="400"/>
       <div class="p-6 flex flex-col gap-3">
         <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Ford Escape 2004</h2>
         <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 125,000</p>
         <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md transition-shadow"
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
           type="button"
           onclick="event.stopPropagation(); openModal('Ford Escape 2004', 'LPS 125,000', imagesCar8[0], imagesCar8, featuresCar8)">
           VER DETALLES
@@ -297,29 +249,29 @@
       </div>
     </div>
     <!-- Card 9: Toyota Hilux 2015 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden no-hover-effect cursor-pointer">
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 cursor-pointer">
       <img alt="Toyota Hilux 2015" class="w-full h-48 object-cover rounded-t-xl" height="200"
         src="imagenes/9.jpg" width="400"/>
       <div class="p-6 flex flex-col gap-3">
         <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Toyota Hilux 2015</h2>
-        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 155,000</p>
+        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 390,000</p>
         <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md transition-shadow"
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
           type="button"
-          onclick="event.stopPropagation(); openModal('Toyota Hilux 2015', 'LPS 155,000', imagesCar9[0], imagesCar9, featuresCar9)">
+          onclick="event.stopPropagation(); openModal('Toyota Hilux 2015', 'LPS 390,000', imagesCar9[0], imagesCar9, featuresCar9)">
           VER DETALLES
         </button>
       </div>
     </div>
     <!-- Card 10: Mazda CX-5 2017 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden no-hover-effect cursor-pointer">
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 cursor-pointer">
       <img alt="Mazda CX-5 2017" class="w-full h-48 object-cover rounded-t-xl" height="200"
         src="imagenes/10.jpg" width="400"/>
       <div class="p-6 flex flex-col gap-3">
         <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Mazda CX-5 2017</h2>
         <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 285,000</p>
         <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md transition-shadow"
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
           type="button"
           onclick="event.stopPropagation(); openModal('Mazda CX-5 2017', 'LPS 285,000', imagesCar10[0], imagesCar10, featuresCar10)">
           VER DETALLES
@@ -327,14 +279,14 @@
       </div>
     </div>
     <!-- Card 11: Hyundai Tucson 2019 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden no-hover-effect cursor-pointer">
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 cursor-pointer">
       <img alt="Hyundai Tucson 2019" class="w-full h-48 object-cover rounded-t-xl" height="200"
         src="imagenes/11.jpg" width="400"/>
       <div class="p-6 flex flex-col gap-3">
         <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Hyundai Tucson 2019</h2>
         <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 315,000</p>
         <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md transition-shadow"
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
           type="button"
           onclick="event.stopPropagation(); openModal('Hyundai Tucson 2019', 'LPS 315,000', imagesCar11[0], imagesCar11, featuresCar11)">
           VER DETALLES
@@ -342,14 +294,14 @@
       </div>
     </div>
     <!-- Card 12: Kia Sportage 2018 -->
-    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden no-hover-effect cursor-pointer">
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 cursor-pointer">
       <img alt="Kia Sportage 2018" class="w-full h-48 object-cover rounded-t-xl" height="200"
         src="imagenes/12.jpg" width="400"/>
       <div class="p-6 flex flex-col gap-3">
         <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Kia Sportage 2018</h2>
         <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 295,000</p>
         <button
-          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md transition-shadow"
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
           type="button"
           onclick="event.stopPropagation(); openModal('Kia Sportage 2018', 'LPS 295,000', imagesCar12[0], imagesCar12, featuresCar12)">
           VER DETALLES
@@ -375,7 +327,7 @@
         <label class="text-[#0b3d91] font-semibold mb-2" for="mensaje">Mensaje</label>
         <textarea class="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-[#0b3d91]" id="mensaje" name="Mensaje" placeholder="Escribe tu mensaje aquí" required rows="4"></textarea>
       </div>
-      <button class="bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-sm tracking-widest py-3 rounded-full shadow-md transition-shadow" type="submit">
+      <button class="bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-sm tracking-widest py-3 rounded-full shadow-md hover:shadow-lg transition-shadow" type="submit">
         Enviar Mensaje
       </button>
     </form>
@@ -401,7 +353,7 @@
   <div id="carModal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-6 z-50 hidden">
     <div class="bg-white rounded-3xl w-full max-w-[1100px] max-h-[92vh] overflow-y-auto shadow-2xl relative flex flex-col p-10"
       style="box-shadow: 0 25px 50px rgba(11, 61, 145, 0.8); min-width:500px;">
-      <button aria-label="Cerrar modal" onclick="closeModal()" class="absolute top-6 right-6 text-gray-600 text-5xl font-extrabold focus:outline-none">
+      <button aria-label="Cerrar modal" onclick="closeModal()" class="absolute top-6 right-6 text-gray-600 hover:text-gray-900 text-5xl font-extrabold focus:outline-none transition-colors">
         &times;
       </button>
       <div class="flex flex-col gap-8">
@@ -421,7 +373,7 @@
             <!-- Características aquí -->
           </ul>
         </div>
-        <button id="reserveNowBtn" class="mt-10 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-2xl tracking-widest py-4 rounded-full shadow-2xl w-full max-w-xs mx-auto flex items-center justify-center gap-4 select-none"
+        <button id="reserveNowBtn" class="mt-10 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-2xl tracking-widest py-4 rounded-full shadow-2xl hover:shadow-[0_0_30px_#007bff] transition-shadow w-full max-w-xs mx-auto flex items-center justify-center gap-4 select-none"
           type="button"
           title="Reservar ahora vía WhatsApp">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -435,31 +387,79 @@
   <!-- Fin modal -->
 
   <script>
-    // Imágenes y características de cada auto
-    const imagesCar1 = ["imagenes/1.1.jpg","imagenes/1.2.jpg","imagenes/1.3.jpg","imagenes/1.4.jpg","imagenes/1.5.jpg","imagenes/1.6.jpg"];
-    const featuresCar1 = ["Marca: Honda","Modelo: CRV EXL","Año: 2015","Motor: 2.4 L 4x4","Color: Gris","Enciende: sí","Camina: sí","Ubicación: Honduras"];
-    const imagesCar2 = ["imagenes/2.2.jpg","imagenes/2.3.jpg","imagenes/2.4.jpg","imagenes/2.5.jpg","imagenes/2.6.jpg","imagenes/2.7.jpg","imagenes/2.8.jpg","imagenes/2.9.jpg","imagenes/2.10.jpg"];
-    const featuresCar2 = ["Versión: XLT","Año: 2010","Motor: 3.0 L 4x4","Transmisión: Automática","Enciende: sí","Camina: sí","Ubicación: Honduras"];
-    const imagesCar3 = ["imagenes/3.1.jpg","imagenes/3.2.jpg","imagenes/3.3.jpg","imagenes/3.4.jpg","imagenes/3.5.jpg","imagenes/3.6.jpg","imagenes/3.7.jpg","imagenes/3.8.jpg"];
-    const featuresCar3 = ["Marca: Ford","Modelo: Escape","Año: 2011","Versión: LIMITADA","Motor: 3.0L V6","Transmisión: Automática 4x4","Enciende: sí","Camina: sí","Ubicación: Honduras","Precio: 175,000"];
-    const imagesCar4 = ["imagenes/4.1.jpg","imagenes/4.2.jpg","imagenes/4.3.jpg","imagenes/4.4.jpg","imagenes/4.5.jpg","imagenes/4.6.jpg","imagenes/4.7.jpg","imagenes/4.8.jpg","imagenes/4.9.jpg","imagenes/4.10.jpg"];
-    const featuresCar4 = ["Marca: BMW","Modelo: X3","Año: 2012","Versión: Xdrive","Motor: 3.0L V6","Transmisión: Automática 4X4","Enciende: sí","Camina: sí","Ubicación: Honduras","Precio: 245,000"];
-    const imagesCar5 = ["imagenes/5.1.jpg","imagenes/5.2.jpg","imagenes/5.3.jpg","imagenes/5.4.jpg","imagenes/5.5.jpg","imagenes/5.6.jpg","imagenes/5.7.jpg","imagenes/5.8.jpg","imagenes/5.9.jpg"];
-    const featuresCar5 = ["Marca: Toyota","Modelo: Corolla","Año: 2018","Motor: 1.8L V4","Transmisión: Automática","Color: Blanco","Enciende: sí","Camina: sí","Ubicación: Honduras"];
-    const imagesCar6 = ["imagenes/6.1.jpg","imagenes/6.2.jpg","imagenes/6.3.jpg","imagenes/6.4.jpg","imagenes/6.5.jpg","imagenes/6.6.jpg","imagenes/6.7.jpg","imagenes/6.8.jpg","imagenes/6.9.jpg"];
-    const featuresCar6 = ["Marca: Toyota","Modelo: XRunner","Año: 2003","Versión: LIMITED","Motor: 4.0L V6","Transmisión: Automática 4x2","Enciende: sí","Camina: sí","Ubicación: USA","Precio: 180,000"];
-    const imagesCar7 = ["imagenes/7.1.jpg","imagenes/7.2.jpg","imagenes/7.3.jpg","imagenes/7.4.jpg","imagenes/7.5.jpg"];
-    const featuresCar7 = ["Marca: Ford","Modelo: Escape","Año: 2016","Versión: TITANIUM","Motor: 2.0L V4","Transmisión: Automática 4x4","Enciende: sí","Camina: sí","Ubicación: plantel de la esperanza","Precio: 225,000"];
-    const imagesCar8 = ["imagenes/8.1.jpg","imagenes/8.2.jpg","imagenes/8.3.jpg","imagenes/8.4.jpg","imagenes/8.5.jpg","imagenes/8.6.jpg","imagenes/8.7.jpg","imagenes/8.8.jpg","imagenes/8.9.jpg"];
-    const featuresCar8 = ["Marca: Ford","Modelo: Escape","Año: 2004","Versión: XLT","Motor: 3.0L V6","Transmisión: Automática 4x4","Enciende: sí","Camina: sí","Ubicación: plantel de la esperanza"];
-    const imagesCar9 = ["imagenes/9.1.jpg","imagenes/9.2.jpg","imagenes/9.3.jpg"];
-    const featuresCar9 = ["Marca: Toyota","Modelo: Hilux","Año: 2015","Versión: LE","Motor: 1.8L V4","Transmisión: Automática","Enciende: sí","Camina: sí","Ubicación: plantel de la esperanza"];
-    const imagesCar10 = ["imagenes/10.1.jpg","imagenes/10.2.jpg","imagenes/10.3.jpg","imagenes/10.4.jpg"];
-    const featuresCar10 = ["Marca: Mazda","Modelo: CX-5","Año: 2017","Motor: 2.5L 4x2","Transmisión: Automática","Color: Rojo","Enciende: sí","Camina: sí","Ubicación: Honduras"];
-    const imagesCar11 = ["imagenes/11.1.jpg","imagenes/11.2.jpg","imagenes/11.3.jpg"];
-    const featuresCar11 = ["Marca: Hyundai","Modelo: Tucson","Año: 2019","Motor: 2.0L 4x2","Transmisión: Automática","Color: Azul","Enciende: sí","Camina: sí","Ubicación: Honduras"];
-    const imagesCar12 = ["imagenes/12.1.jpg","imagenes/12.2.jpg","imagenes/12.3.jpg","imagenes/12.4.jpg"];
-    const featuresCar12 = ["Marca: Kia","Modelo: Sportage","Año: 2018","Motor: 2.0L 4x2","Transmisión: Automática","Color: Blanco","Enciende: sí","Camina: sí","Ubicación: Honduras"];
+    // Arrays de imágenes y características de los 12 autos
+    const imagesCar1 = [
+      "imagenes/1.1.jpg","imagenes/1.2.jpg","imagenes/1.3.jpg","imagenes/1.4.jpg","imagenes/1.5.jpg","imagenes/1.6.jpg"
+    ];
+    const featuresCar1 = [
+      "Marca: Honda","Modelo: CRV EXL","Año: 2015","Motor: 2.4 L 4x4","Color: Gris","Enciende: sí","Camina: sí","Ubicación: Honduras"
+    ];
+    const imagesCar2 = [
+      "imagenes/2.2.jpg","imagenes/2.3.jpg","imagenes/2.4.jpg","imagenes/2.5.jpg","imagenes/2.6.jpg","imagenes/2.7.jpg","imagenes/2.8.jpg","imagenes/2.9.jpg","imagenes/2.10.jpg"
+    ];
+    const featuresCar2 = [
+      "Versión: XLT","Año: 2010","Motor: 3.0 L 4x4","Transmisión: Automática","Enciende: sí","Camina: sí","Ubicación: Honduras"
+    ];
+    const imagesCar3 = [
+      "imagenes/3.1.jpg","imagenes/3.2.jpg","imagenes/3.3.jpg","imagenes/3.4.jpg","imagenes/3.5.jpg","imagenes/3.6.jpg","imagenes/3.7.jpg","imagenes/3.8.jpg"
+    ];
+    const featuresCar3 = [
+      "Marca: Ford","Modelo: Escape","Año: 2011","Versión: LIMITADA","Motor: 3.0L V6","Transmisión: Automática 4x4","Enciende: sí","Camina: sí","Ubicación: Honduras","Precio: 175,000"
+    ];
+    const imagesCar4 = [
+      "imagenes/4.1.jpg","imagenes/4.2.jpg","imagenes/4.3.jpg","imagenes/4.4.jpg","imagenes/4.5.jpg","imagenes/4.6.jpg","imagenes/4.7.jpg","imagenes/4.8.jpg","imagenes/4.9.jpg","imagenes/4.10.jpg"
+    ];
+    const featuresCar4 = [
+      "Marca: BMW","Modelo: X3","Año: 2012","Versión: XDRIVE","Motor: 3.0L V6","Transmisión: Automática 4x4","Enciende: sí","Camina: sí","Ubicación: Honduras","Precio: 245,000"
+    ];
+    const imagesCar5 = [
+      "imagenes/5.1.jpg","imagenes/5.2.jpg","imagenes/5.3.jpg","imagenes/5.4.jpg","imagenes/5.5.jpg","imagenes/5.6.jpg","imagenes/5.7.jpg","imagenes/5.8.jpg","imagenes/5.9.jpg"
+    ];
+    const featuresCar5 = [
+      "Marca: Toyota","Modelo: Corolla","Año: 2018","Versión: SE","Motor: 1.8L","Transmisión: Automática","Enciende: sí","Camina: sí","Ubicación: Honduras","Precio: 320,000"
+    ];
+    const imagesCar6 = [
+      "imagenes/6.1.jpg","imagenes/6.2.jpg","imagenes/6.3.jpg","imagenes/6.4.jpg","imagenes/6.5.jpg","imagenes/6.6.jpg","imagenes/6.7.jpg","imagenes/6.8.jpg","imagenes/6.9.jpg"
+    ];
+    const featuresCar6 = [
+      "Marca: Toyota","Modelo: XRunner","Año: 2003","Versión: LIMITED","Motor: 4.0L V6","Transmisión: Automática 4x2","Enciende: sí","Camina: sí","Ubicación: USA","Precio: 180,000"
+    ];
+    const imagesCar7 = [
+      "imagenes/7.1.jpg","imagenes/7.2.jpg","imagenes/7.3.jpg","imagenes/7.4.jpg","imagenes/7.5.jpg"
+    ];
+    const featuresCar7 = [
+      "Marca: Ford","Modelo: Escape","Año: 2016","Versión: TITANIUM","Motor: 2.0L V4","Transmisión: Automática 4x4","Enciende: sí","Camina: sí","Ubicación: plantel de la esperanza","Precio: 225,000"
+    ];
+    const imagesCar8 = [
+      "imagenes/8.1.jpg","imagenes/8.2.jpg","imagenes/8.3.jpg","imagenes/8.4.jpg","imagenes/8.5.jpg","imagenes/8.6.jpg","imagenes/8.7.jpg","imagenes/8.8.jpg","imagenes/8.9.jpg"
+    ];
+    const featuresCar8 = [
+      "Marca: Ford","Modelo: Escape","Año: 2004","Versión: XLT","Motor: 3.0L V6","Transmisión: Automática 4x4","Enciende: sí","Camina: sí","Ubicación: plantel de la esperanza","Precio: 125,000"
+    ];
+    const imagesCar9 = [
+      "imagenes/9.1.jpg","imagenes/9.2.jpg","imagenes/9.3.jpg","imagenes/9.4.jpg","imagenes/9.5.jpg","imagenes/9.6.jpg","imagenes/9.7.jpg","imagenes/9.8.jpg","imagenes/9.9.jpg","imagenes/9.10.jpg"
+    ];
+    const featuresCar9 = [
+      "Marca: Toyota","Modelo: Hilux","Año: 2015","Versión: 4x4","Motor: 2.5L Diesel","Transmisión: Manual","Enciende: sí","Camina: sí","Ubicación: Honduras","Precio: 390,000"
+    ];
+    const imagesCar10 = [
+      "imagenes/10.1.jpg","imagenes/10.2.jpg","imagenes/10.3.jpg","imagenes/10.4.jpg","imagenes/10.5.jpg","imagenes/10.6.jpg","imagenes/10.7.jpg","imagenes/10.8.jpg","imagenes/10.9.jpg"
+    ];
+    const featuresCar10 = [
+      "Marca: Mazda","Modelo: CX-5","Año: 2017","Versión: Grand Touring","Motor: 2.5L","Transmisión: Automática","Enciende: sí","Camina: sí","Ubicación: Honduras","Precio: 285,000"
+    ];
+    const imagesCar11 = [
+      "imagenes/11.1.jpg","imagenes/11.2.jpg","imagenes/11.3.jpg","imagenes/11.4.jpg","imagenes/11.5.jpg","imagenes/11.6.jpg","imagenes/11.7.jpg","imagenes/11.8.jpg","imagenes/11.9.jpg"
+    ];
+    const featuresCar11 = [
+      "Marca: Hyundai","Modelo: Tucson","Año: 2019","Versión: GLS","Motor: 2.0L","Transmisión: Automática","Enciende: sí","Camina: sí","Ubicación: Honduras","Precio: 315,000"
+    ];
+    const imagesCar12 = [
+      "imagenes/12.1.jpg","imagenes/12.2.jpg","imagenes/12.3.jpg","imagenes/12.4.jpg","imagenes/12.5.jpg","imagenes/12.6.jpg","imagenes/12.7.jpg","imagenes/12.8.jpg","imagenes/12.9.jpg"
+    ];
+    const featuresCar12 = [
+      "Marca: Kia","Modelo: Sportage","Año: 2018","Versión: LX","Motor: 2.0L","Transmisión: Automática","Enciende: sí","Camina: sí","Ubicación: Honduras","Precio: 295,000"
+    ];
 
     // WhatsApp y correo de destino
     const whatsappNumber = "50432354306";
@@ -508,7 +508,7 @@
       features.forEach((feature) => {
         const li = document.createElement("li");
         li.textContent = feature;
-        li.className = "mb-2 cursor-default select-text";
+        li.className = "mb-2 hover:text-[#007bff] transition-colors cursor-default select-text";
         modalFeaturesList.appendChild(li);
       });
 
