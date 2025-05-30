@@ -168,6 +168,7 @@
   
   <!-- Cards de autos -->
   <div class="flex flex-wrap gap-6 max-w-6xl w-full justify-center mb-12">
+    <!-- Cards 1-9 originales aquí... -->
     <!-- Card 1: Honda CRV 2015 -->
     <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
       <img alt="Honda CRV 2015" class="w-full h-48 object-cover rounded-t-xl" height="200"
@@ -183,6 +184,7 @@
         </button>
       </div>
     </div>
+    <!-- ... los cards del 2 al 9 aquí ... -->
     <!-- Card 2: Ford Escape 2010 -->
     <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
       <img alt="Ford Escape 2010" class="w-full h-48 object-cover rounded-t-xl" height="200"
@@ -299,6 +301,51 @@
           class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
           type="button"
           onclick="event.stopPropagation(); openModal('Toyota Corolla 2005', 'LPS 155,000', imagesCar9[0], imagesCar9, featuresCar9)">
+          VER DETALLES
+        </button>
+      </div>
+    </div>
+    <!-- Card 10: Mazda CX-5 2017 -->
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+      <img alt="Mazda CX-5 2017" class="w-full h-48 object-cover rounded-t-xl" height="200"
+        src="imagenes/10.jpg" width="400"/>
+      <div class="p-6 flex flex-col gap-3">
+        <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Mazda CX-5 2017</h2>
+        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 285,000</p>
+        <button
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
+          type="button"
+          onclick="event.stopPropagation(); openModal('Mazda CX-5 2017', 'LPS 285,000', imagesCar10[0], imagesCar10, featuresCar10)">
+          VER DETALLES
+        </button>
+      </div>
+    </div>
+    <!-- Card 11: Hyundai Tucson 2019 -->
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+      <img alt="Hyundai Tucson 2019" class="w-full h-48 object-cover rounded-t-xl" height="200"
+        src="imagenes/11.jpg" width="400"/>
+      <div class="p-6 flex flex-col gap-3">
+        <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Hyundai Tucson 2019</h2>
+        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 315,000</p>
+        <button
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
+          type="button"
+          onclick="event.stopPropagation(); openModal('Hyundai Tucson 2019', 'LPS 315,000', imagesCar11[0], imagesCar11, featuresCar11)">
+          VER DETALLES
+        </button>
+      </div>
+    </div>
+    <!-- Card 12: Kia Sportage 2018 -->
+    <div class="bg-white rounded-xl shadow-lg max-w-xs w-full flex flex-col overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+      <img alt="Kia Sportage 2018" class="w-full h-48 object-cover rounded-t-xl" height="200"
+        src="imagenes/12.jpg" width="400"/>
+      <div class="p-6 flex flex-col gap-3">
+        <h2 class="text-[#0b3d91] font-extrabold text-lg sm:text-xl">Kia Sportage 2018</h2>
+        <p class="text-green-600 font-extrabold text-base sm:text-lg">LPS 295,000</p>
+        <button
+          class="mt-4 bg-gradient-to-r from-[#0b3d91] to-[#007bff] text-white font-extrabold text-xs sm:text-sm tracking-widest py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
+          type="button"
+          onclick="event.stopPropagation(); openModal('Kia Sportage 2018', 'LPS 295,000', imagesCar12[0], imagesCar12, featuresCar12)">
           VER DETALLES
         </button>
       </div>
@@ -576,14 +623,70 @@
     ];
     const featuresCar9 = [
       "Marca: Toyota",
-"Modelo: Corolla",
-"Año: 2005",
-"Versión: LE",
-"MOTOR: 1.8L V4",
-"Trasmision: Automática ",
-"Enciende: si ",
-"Camina: si ",
-"Ubicación: plantel de la esperanza"
+      "Modelo: Corolla",
+      "Año: 2005",
+      "Versión: LE",
+      "MOTOR: 1.8L V4",
+      "Trasmision: Automática ",
+      "Enciende: si ",
+      "Camina: si ",
+      "Ubicación: plantel de la esperanza"
+    ];
+
+    // Carro 10: Mazda CX-5 2017
+    const imagesCar10 = [
+      "imagenes/10.1.jpg",
+      "imagenes/10.2.jpg",
+      "imagenes/10.3.jpg",
+      "imagenes/10.4.jpg"
+    ];
+    const featuresCar10 = [
+      "Marca: Mazda",
+      "Modelo: CX-5",
+      "Año: 2017",
+      "Motor: 2.5L 4x2",
+      "Transmisión: Automática",
+      "Color: Rojo",
+      "Enciende: sí",
+      "Camina: sí",
+      "Ubicación: Honduras"
+    ];
+
+    // Carro 11: Hyundai Tucson 2019
+    const imagesCar11 = [
+      "imagenes/11.1.jpg",
+      "imagenes/11.2.jpg",
+      "imagenes/11.3.jpg"
+    ];
+    const featuresCar11 = [
+      "Marca: Hyundai",
+      "Modelo: Tucson",
+      "Año: 2019",
+      "Motor: 2.0L 4x2",
+      "Transmisión: Automática",
+      "Color: Azul",
+      "Enciende: sí",
+      "Camina: sí",
+      "Ubicación: Honduras"
+    ];
+
+    // Carro 12: Kia Sportage 2018
+    const imagesCar12 = [
+      "imagenes/12.1.jpg",
+      "imagenes/12.2.jpg",
+      "imagenes/12.3.jpg",
+      "imagenes/12.4.jpg"
+    ];
+    const featuresCar12 = [
+      "Marca: Kia",
+      "Modelo: Sportage",
+      "Año: 2018",
+      "Motor: 2.0L 4x2",
+      "Transmisión: Automática",
+      "Color: Blanco",
+      "Enciende: sí",
+      "Camina: sí",
+      "Ubicación: Honduras"
     ];
 
     // WhatsApp y correo de destino
